@@ -1,0 +1,2 @@
+import { getProducts } from '@/lib/products/repository';import { ProductFilters } from '@/components/products/ProductFilters';import { PageHero } from '@/components/ui/PageHero';
+export default async function Page(){const p=(await getProducts()).filter(x=>x.category==='photocards'&&x.status!=='sold');return <><PageHero eyebrow="binder pockets" title="photocards" copy="Tap or swipe a card to flip it over."/><section className="section shell"><ProductFilters products={p}/></section></>}

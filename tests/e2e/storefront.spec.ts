@@ -1,0 +1,3 @@
+import { test, expect } from '@playwright/test';
+test('homepage exposes the main collection journeys',async({page})=>{await page.goto('/');await expect(page.getByRole('heading',{name:/from my collection/i})).toBeVisible();await expect(page.getByRole('link',{name:/shop the collection/i})).toBeVisible();await expect(page.getByRole('link',{name:'Photocards'}).first()).toBeVisible();});
+test('photocard route provides flippable cards',async({page})=>{await page.goto('/photocards');const card=page.getByRole('button',{name:/show back of/i}).first();await expect(card).toBeVisible();await card.click();await expect(page.getByRole('button',{name:/show front of/i}).first()).toBeVisible();});

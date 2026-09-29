@@ -1,0 +1,2 @@
+import { render,screen } from '@testing-library/react';import { expect,it } from 'vitest';import { OrderTimeline } from '@/components/order/OrderTimeline';
+it('shows the full customer order status flow',()=>{render(<OrderTimeline status="packing"/>);for(const label of ['Claim received','Confirmed','Awaiting payment','Payment received','Packing','Shipped','Completed'])expect(screen.getByText(label)).toBeInTheDocument()});

@@ -1,0 +1,2 @@
+import { expect,it } from 'vitest';import { sampleProducts } from '@/lib/products/sample-products';
+it('seeds four Hot Mess photocards with one temporary shared back cover',()=>{expect(sampleProducts).toHaveLength(4);expect(new Set(sampleProducts.map(p=>p.barcode)).size).toBe(4);expect(new Set(sampleProducts.map(p=>p.back_image))).toEqual(new Set(['/assets/images/products/photocards/hot mess/hotmess b_cover.jpg']));expect(sampleProducts.every(p=>p.price===null)).toBe(true)});

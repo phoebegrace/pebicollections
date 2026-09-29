@@ -1,0 +1,2 @@
+import { render,screen } from '@testing-library/react';import userEvent from '@testing-library/user-event';import { expect,it } from 'vitest';import { PhotocardFlip } from '@/components/products/PhotocardFlip';
+it('flips a card with an accessible button',async()=>{render(<PhotocardFlip front="/front.png" back="/back.jpg" alt="Karina card"/>);const card=screen.getByRole('button',{name:/show back/i});await userEvent.click(card);expect(screen.getByRole('button',{name:/show front/i})).toHaveAttribute('aria-pressed','true')});

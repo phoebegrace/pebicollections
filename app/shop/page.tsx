@@ -1,0 +1,2 @@
+import { getProducts } from '@/lib/products/repository';import { ProductFilters } from '@/components/products/ProductFilters';import { PageHero } from '@/components/ui/PageHero';
+export default async function ShopPage(){const products=await getProducts();return <><PageHero eyebrow="the full binder" title="shop the collection" copy="Every currently listed photocard, album and bundle in one place."/><section className="section shell"><ProductFilters products={products}/></section></>}

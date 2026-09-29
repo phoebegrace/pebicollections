@@ -1,0 +1,1 @@
+import Link from 'next/link';export default function NotFound(){return <div className="shell error-screen"><div className="eyebrow">404</div><h1>nothing in this binder pocket.</h1><p>The page may have moved or already left the collection.</p><Link className="button button-primary" href="/shop">back to the collection</Link></div>}

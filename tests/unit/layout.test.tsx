@@ -1,0 +1,3 @@
+import { render,screen } from '@testing-library/react';import { expect,it,vi } from 'vitest';import { SiteHeader } from '@/components/layout/SiteHeader';import { SiteFooter } from '@/components/layout/SiteFooter';import { BasketProvider } from '@/components/basket/BasketProvider';
+vi.mock('next/navigation',()=>({usePathname:()=>'/'}));
+it('renders collector navigation, basket and footer',()=>{render(<BasketProvider><SiteHeader/><SiteFooter/></BasketProvider>);for(const label of ['Shop','Photocards','Albums','Bundles','Sold','FAQ'])expect(screen.getByRole('link',{name:label})).toBeInTheDocument();expect(screen.getByRole('link',{name:/basket/i})).toBeInTheDocument();expect(screen.getByText(/from my collection, to yours/i)).toBeInTheDocument()});

@@ -1,0 +1,2 @@
+import { NextRequest,NextResponse } from 'next/server';import { authorizeAdminApi } from '@/lib/admin/api-auth';import { fireOrderIntegrations,type OrderEventName } from '@/lib/integrations/webhooks';
+export async function POST(req:NextRequest){if(!await authorizeAdminApi())return NextResponse.json({error:'Unauthorized'},{status:401});const body=await req.json();if(!body.event)return NextResponse.json({error:'Missing event'},{status:400});const result=await fireOrderIntegrations(body.event as OrderEventName,body.payload);return NextResponse.json({ok:true,result});}

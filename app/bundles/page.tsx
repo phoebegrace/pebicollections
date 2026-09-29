@@ -1,0 +1,2 @@
+import { getProducts } from '@/lib/products/repository';import { ProductFilters } from '@/components/products/ProductFilters';import { PageHero } from '@/components/ui/PageHero';
+export default async function Page(){const p=(await getProducts()).filter(x=>x.category==='bundles'&&x.status!=='sold');return <><PageHero eyebrow="little sets" title="bundles" copy="Pieces that make more sense staying together."/><section className="section shell"><ProductFilters products={p}/></section></>}

@@ -1,0 +1,2 @@
+import { getProducts } from '@/lib/products/repository';import { ProductGrid } from '@/components/products/ProductGrid';import { PageHero } from '@/components/ui/PageHero';
+export default async function Page(){const p=(await getProducts()).filter(x=>x.status==='sold');return <><PageHero eyebrow="archive" title="sold" copy="Already found a new shelf, but kept here as part of the archive."/><section className="section shell"><ProductGrid products={p}/></section></>}

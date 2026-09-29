@@ -1,0 +1,2 @@
+import { getProducts } from '@/lib/products/repository';import { ProductFilters } from '@/components/products/ProductFilters';import { PageHero } from '@/components/ui/PageHero';
+export default async function Page(){const p=(await getProducts()).filter(x=>x.category==='albums'&&x.status!=='sold');return <><PageHero eyebrow="shelf archive" title="albums" copy="Sealed, unsealed, and well-loved albums from my collection."/><section className="section shell"><ProductFilters products={p}/></section></>}

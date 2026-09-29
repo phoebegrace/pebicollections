@@ -1,0 +1,2 @@
+import { expect,it } from 'vitest';import fs from 'node:fs';
+it('defines unique product codes, public order token and atomic claim function',()=>{const sql=fs.readFileSync('supabase/migrations/001_initial_schema.sql','utf8');expect(sql).toMatch(/sku text not null unique/);expect(sql).toMatch(/barcode text not null unique/);expect(sql).toMatch(/order_number text not null unique/);expect(sql).toMatch(/public_token uuid not null/);expect(sql).toMatch(/create_claim_atomic/);expect(sql).toMatch(/for update/)})

@@ -1,0 +1,3 @@
+import { expect,it } from 'vitest';import { ClaimSchema } from '@/lib/orders/create-claim';
+it('requires a valid email and at least one social handle',()=>{expect(ClaimSchema.safeParse({email:'nope',instagramHandle:'',tiktokHandle:'',preferredContactPlatform:'instagram',marketingOptIn:false,items:[{product_id:'x',quantity:1}]}).success).toBe(false)});
+it('accepts a valid social claim',()=>{expect(ClaimSchema.safeParse({email:'buyer@example.com',instagramHandle:'@buyer',tiktokHandle:'',preferredContactPlatform:'instagram',marketingOptIn:false,items:[{product_id:'x',quantity:1}]}).success).toBe(true)});
