@@ -49,7 +49,9 @@ export interface OrderView {
   order_number: string;
   public_token: string;
   status: OrderStatus;
+  first_name: string;
   email: string;
+  social_handle: string;
   instagram_handle: string | null;
   tiktok_handle: string | null;
   preferred_contact_platform: 'instagram' | 'tiktok';

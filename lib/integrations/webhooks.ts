@@ -1,4 +1,35 @@
 import { env } from '@/lib/config/env';
-export type OrderEventName='customer.created'|'claim.created'|'order.confirmed'|'payment.received'|'order.packed'|'order.shipped'|'order.completed';
-export async function fireWebhook(url:string,event:OrderEventName,payload:unknown){if(!url)return {skipped:true};try{const r=await fetch(url,{method:'POST',headers:{'content-type':'application/json','x-pebicart-event':event},body:JSON.stringify({event,payload}),signal:AbortSignal.timeout(8000)});return {ok:r.ok,status:r.status};}catch(error){console.error('Pebicart webhook failed',error);return {ok:false};}}
-export async function fireOrderIntegrations(event:OrderEventName,payload:unknown){const results=await Promise.allSettled([fireWebhook(env.ghlWebhookUrl,event,payload),fireWebhook(env.emailWebhookUrl,event,payload)]);return results;}
+
+export type OrderEventName =
+  | 'customer.created'
+  | 'claim.created'
+  | 'marketing.subscribed'
+  | 'order.confirmed'
+  | 'payment.received'
+  | 'order.packed'
+  | 'order.shipped'
+  | 'order.completed'
+  | 'feedback.requested';
+
+export async function fireWebhook(url:string,event:OrderEventName,payload:unknown){
+  if(!url) return {skipped:true};
+  try{
+    const r = await fetch(url,{
+      method:'POST',
+      headers:{'content-type':'application/json','x-pebicart-event':event},
+      body:JSON.stringify({event,payload}),
+      signal:AbortSignal.timeout(8000)
+    });
+    return {ok:r.ok,status:r.status};
+  }catch(error){
+    console.error('Pebicart webhook failed',error);
+    return {ok:false};
+  }
+}
+
+export async function fireOrderIntegrations(event:OrderEventName,payload:unknown){
+  return Promise.allSettled([
+    fireWebhook(env.ghlWebhookUrl,event,payload),
+    fireWebhook(env.emailWebhookUrl,event,payload)
+  ]);
+}

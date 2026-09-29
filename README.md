@@ -132,3 +132,72 @@ npm run test:e2e
 ```
 
 The generated document is deliberately called a **Claim Summary** / **Order Summary**, not an official receipt or tax invoice.
+
+## Updated Pebicart contact + automation flow
+
+Public contact email: `info@pebicollections.com`.
+
+The claim form now collects only:
+- first name
+- email
+- preferred contact platform (Instagram or TikTok)
+- one username for the selected platform
+- optional note
+- separate optional marketing consent
+
+This avoids duplicate Instagram + TikTok username fields.
+
+### Email / GoHighLevel automation events
+
+Both `GHL_WEBHOOK_URL` and `EMAIL_WEBHOOK_URL` receive JSON POST events. The event name is available in both the `x-pebicart-event` header and the JSON body.
+
+Events used by this build:
+- `claim.created` — transactional claim confirmation event
+- `marketing.subscribed` — only fires if the buyer explicitly checks the marketing opt-in checkbox
+- `order.confirmed`
+- `payment.received`
+- `order.packed`
+- `order.shipped`
+- `order.completed`
+- `feedback.requested` — fires when an admin changes an order to `completed`
+
+The claim, marketing-subscription, and feedback events include an `email_automation` object containing `to`, `firstName`, `replyTo`, `subject`, `preview`, and `body`. In GoHighLevel, use the incoming event as the workflow trigger and map those fields into the email action.
+
+Marketing consent is never pre-checked. Transactional claim/order events continue to work whether or not the buyer opts into marketing.
+
+### Database update
+
+For a new Supabase project, run the migrations in order:
+
+```text
+supabase/migrations/001_initial_schema.sql
+supabase/migrations/002_customer_name_social_automation.sql
+supabase/seed.sql
+```
+
+If you already ran migration `001_initial_schema.sql`, only run `002_customer_name_social_automation.sql` once, then keep your existing product data.
+
+### Navigation graphics
+
+The right-side desktop dock / mobile bottom dock uses the generated Pebicart graphics stored in:
+
+```text
+public/assets/images/icons/navigation/
+  shop.png
+  photocards.png
+  albums.png
+  bundles.png
+  sold.png
+  faq.png
+  basket.png
+```
+
+### Hot Mess card backs
+
+All four sample Hot Mess photocards currently use:
+
+```text
+public/assets/images/products/photocards/hot mess/hotmess b_cover.jpg
+```
+
+The public browser URL is `/assets/images/products/photocards/hot mess/hotmess b_cover.jpg`. Each product still has an independent `back_image` field so this can be changed per card later.
